@@ -1,0 +1,27 @@
+# Default values.
+# This is a YAML-formatted file.
+imageTag: latest
+# Use nameOverride to override chart name in objects' names
+# Default objects' name is {{.Release.Name}}-{{.Chart.Name}}
+nameOverride:
+persistence:
+# if persistance is disabled, gluster nodes will be started with configuration and data mapped to emptyDir volumes,
+#  otherwise persistent volume claims will be created or expected to exist
+  enabled: false
+# storage class must be specified if you want to use dynamic volume provisioning
+  storageClass:
+  accessMode: ReadWriteOnce
+# size must be specified if you want to use dynamic volume provisioning
+  size: 20Gi
+# By default requested resources and resource limits are empty
+# Specify some values if you want the pods to be in a different QoS class
+resources:
+  cpuRequest: 0
+  memoryRequest: 0
+  cpuLimit: 0
+  memoryLimit: 0
+#resources:
+#  cpuRequest: 1000m
+#  memoryRequest: 1024Mi
+#  cpuLimit: 1000m
+#  memoryLimit: 1536Mi
