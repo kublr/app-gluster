@@ -4,6 +4,7 @@ imageTag: latest
 # Use nameOverride to override chart name in objects' names
 # Default objects' name is {{.Release.Name}}-{{.Chart.Name}}
 nameOverride:
+replicas: 3
 persistence:
 # if persistance is disabled, gluster nodes will be started with configuration and data mapped to emptyDir volumes,
 #  otherwise persistent volume claims will be created or expected to exist
@@ -16,12 +17,18 @@ persistence:
 # By default requested resources and resource limits are empty
 # Specify some values if you want the pods to be in a different QoS class
 resources:
-  cpuRequest: 0
-  memoryRequest: 0
-  cpuLimit: 0
-  memoryLimit: 0
+  gluster:
+    limits:
+      cpu: 0
+      memory: 0
+    requests:
+      cpu: 0
+      memory: 0
 #resources:
-#  cpuRequest: 1000m
-#  memoryRequest: 1024Mi
-#  cpuLimit: 1000m
-#  memoryLimit: 1536Mi
+#  gluster:
+#    limits:
+#      cpu: 1000m
+#      memory: 1024Mi
+#    requests:
+#      cpu: 1000m
+#      memory: 1536Mi

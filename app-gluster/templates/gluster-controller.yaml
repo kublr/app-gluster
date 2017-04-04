@@ -26,7 +26,7 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   serviceName: {{ template "fullname" . }}
-  replicas: 3
+  replicas: {{ .Values.replicas }}
   template:
     metadata:
       name: {{ template "fullname" . }}
@@ -42,12 +42,7 @@ spec:
         image: gluster/gluster-centos:{{.Values.imageTag}}
         imagePullPolicy: Always
         resources:
-          requests:
-            cpu: "{{.Values.resources.cpuRequest}}"
-            memory: "{{.Values.resources.memoryRequest}}"
-          limits:
-            cpu: "{{.Values.resources.cpuLimit}}"
-            memory: "{{.Values.resources.memoryLimit}}"
+{{ .Values.resources.gluster | toYaml | indent 10 }}
         securityContext:
           privileged: true
         ports:
