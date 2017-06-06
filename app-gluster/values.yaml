@@ -1,13 +1,15 @@
 # Default values.
 # This is a YAML-formatted file.
 imageTag: latest
+imagePullPolicy: Always
 # Use nameOverride to override chart name in objects' names
-# Default objects' name is {{.Release.Name}}-{{.Chart.Name}}
+# Default objects' name is {{.Release.Name}}-{{.Chart.Name}}, which will result in '<release-name>-app-gluster' for this chart
 nameOverride:
 replicas: 3
 persistence:
 # if persistance is disabled, gluster nodes will be started with configuration and data mapped to emptyDir volumes,
-#  otherwise persistent volume claims will be created or expected to exist
+# otherwise persistent volume claims will be created or expected to exist with names 'gluster-<stateful-set-name>-<index>'
+# By default it will result in PVC names like 'gluster-<release-name>-app-gluster-<index>' (<index> starting with 0)
   enabled: false
 # storage class must be specified if you want to use dynamic volume provisioning
   storageClass:
@@ -22,8 +24,8 @@ resources:
       cpu: 0
       memory: 0
     requests:
-      cpu: 0
-      memory: 0
+      cpu: 100
+      memory: 128Mi
 #resources:
 #  gluster:
 #    limits:

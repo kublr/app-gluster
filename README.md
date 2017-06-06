@@ -25,9 +25,10 @@ kubectl exec gluster-app-gluster-0 -- gluster peer probe gluster-app-gluster-2.g
 kubectl exec gluster-app-gluster-1 -- gluster peer probe gluster-app-gluster-0.gluster-app-gluster.default.svc.cluster.local
 ```
 
-Unfortunately there is an issue with reverse DNS lookup for StatefulSet pods in Kubernetes, so after peer discover
-gluster peer hostnames must be fixed in some peers at least.
+Unfortunately there is an issue with reverse DNS lookup for StatefulSet pods in Kubernetes 1.5.
+It looks like this issue is fixed in Kubernetes 1.6, but verify it before going further. 
 
+If the issue is present, gluster peer hostnames must be fixed in some peers at least.
 Fortunately this is a one-time procedure:
 
 ```

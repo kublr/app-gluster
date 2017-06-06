@@ -27,6 +27,9 @@ metadata:
 spec:
   serviceName: {{ template "fullname" . }}
   replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
   template:
     metadata:
       name: {{ template "fullname" . }}
@@ -36,11 +39,11 @@ spec:
         release: "{{ .Release.Name }}"
         heritage: "{{ .Release.Service }}"
     spec:
-      terminationGracePeriodSeconds: 5
+      terminationGracePeriodSeconds: 15
       containers:
       - name: gluster
         image: gluster/gluster-centos:{{.Values.imageTag}}
-        imagePullPolicy: Always
+        imagePullPolicy: {{.Values.imagePullPolicy}}
         resources:
 {{ .Values.resources.gluster | toYaml | indent 10 }}
         securityContext:
